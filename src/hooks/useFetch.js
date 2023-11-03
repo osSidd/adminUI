@@ -1,16 +1,35 @@
-async function useFetch(){
-    let data = []
+import { useEffect} from "react";
+import useUserContext from './useUserContext'
 
-    try{
-        const response = await fetch('https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json')
-        
-        if(response.ok){
-            data = await response.json()
-            return data
+export default function useFetch(url){
+    
+    const {dispatch} = useUserContext()
+
+    async function fetchData(){
+        try{
+            const response = await fetch(url)
+            if(response.ok){
+                const data = await response.json()
+                const userData = data.map(item => ({...item, checked: false}))
+                dispatch({
+                    type: 'SET_DATA',
+                    payload: {
+                        userData,
+                        noOfPages: parseInt(data.length/10) + 1,
+                        displayData: userData.slice(0,10),
+                        length: data.length,
+                    }
+                })
+            }
+        }catch(err){
+            console.log(err)
         }
-    }catch(err){
-        console.log(err)
     }
-}
 
-export default useFetch
+    console.log('hi')
+    
+    useEffect(() => {
+        fetchData()
+        console.log('bye')
+    }, [url])
+}

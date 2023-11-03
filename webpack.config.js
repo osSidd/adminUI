@@ -2,19 +2,23 @@ const path = require('path')
 const webpack = require('webpack')
 
 module.exports = {
-    entry: "./src/index.js",
+    entry: "./src/index.jsx",
     mode:"development",
     module:{
         rules: [
             {
-                test: /\.(js)$/,
+                test: /\.(jsx|js)$/,
                 exclude: /(node_modules|bower_components)/,
                 loader: "babel-loader",
                 options: {presets: ["@babel/env"]},
+            },
+            {
+                test: /\.s[ac]ss$/i,
+                use:["style-loader", "css-loader", "sass-loader"]
             }
         ]
     },
-    resolve: {extensions: ["*", ".js"]},
+    resolve: {extensions: ["*",".jsx", ".js"]},
     output: {
         path: path.resolve(__dirname, 'public'),
         publicPath: "/dist",
