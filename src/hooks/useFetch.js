@@ -10,7 +10,7 @@ export default function useFetch(url){
             const response = await fetch(url)
             if(response.ok){
                 const data = await response.json()
-                const userData = data.map(item => ({...item, checked: false}))
+                const userData = data.map(item => ({...item, checked: false, edit: false}))
                 dispatch({
                     type: 'SET_DATA',
                     payload: {
@@ -25,11 +25,8 @@ export default function useFetch(url){
             console.log(err)
         }
     }
-
-    console.log('hi')
     
     useEffect(() => {
         fetchData()
-        console.log('bye')
     }, [url])
 }

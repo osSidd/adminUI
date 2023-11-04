@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-import { UserContext } from "../../context/userContext";
+import React from "react";
+import useUserContext from "../../hooks/useUserContext";
 
 export default function TableHeader(){
     
-    const {dispatch} = useContext(UserContext)
+    const {dispatch} = useUserContext()
     const headers = ['input', 'name', 'email', 'role', 'actions']
     
     function selectAll(e){

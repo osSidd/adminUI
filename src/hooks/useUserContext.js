@@ -3,8 +3,10 @@ import { UserContext } from "../context/userContext"
 
 export default function useUserContext(){
     
-    const {userData, noOfPages, displayData, length, start, end, dispatch} = useContext(UserContext)
-        console.log( displayData)
+    const {noOfPages, displayData, length, start, end, dispatch} = useContext(UserContext)
+    
+    console.log(noOfPages)
+
     return {
         displayData,
         noOfPages,

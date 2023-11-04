@@ -63,7 +63,7 @@ export default function usePageChange(){
 
     function deleteSelected(e){
         dispatch({
-            type: 'DELETE_SELECTED',
+            type: 'DELETE_ALL',
         })
     }
 
