@@ -1,16 +1,15 @@
-import React from "react"
+import React, { useEffect, useState } from "react";
 
 import './App.scss'
-import Table from "./components/table"
-import Searchpanel from "./components/search/search"
-import PageBtns from "./components/pageBtns/pageBtns"
+import Pagination from "./components/pagination/pagination"
 
 export default function App(){
+
     return (
-        <div>
-            <Searchpanel/>
-            <Table/>
-            <PageBtns/>
+        <div className="App">
+            <Pagination
+                noOfRows={10}
+            />
         </div>
     )
 }
