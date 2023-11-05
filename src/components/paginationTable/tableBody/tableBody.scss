@@ -1,0 +1,80 @@
+$border-color:#ccc;
+$delete: #ff0000ae;
+
+.hide-row{
+    display: none;
+}
+
+.show-row{
+    display: table-cell;
+}
+
+
+.table-container{
+    width: 70%;
+    min-height: 500px;
+}
+
+table{
+    width: 100%;
+    margin: 25px 0;
+    border-collapse: collapse;
+    tr{
+        border-bottom: 1px solid $border-color;
+        td:first-child{
+            padding-right: 3rem;
+        }
+
+        td{
+            color: #555;
+            button{
+                cursor: pointer;
+                outline: none;
+                border: none;
+                *{
+                    pointer-events: none;
+                }
+            }
+        }
+    }
+
+    th,td{
+        padding:10px 0;
+    }
+}
+
+th{
+    text-align: left;
+    text-transform: capitalize;
+}
+
+.edit-input{
+    font-size: 1rem;
+    width: fit-content;
+    color:#aaa;
+    outline:none;
+    border:none;
+    border-radius: 5px;
+}
+
+.role, .name, .email{
+    text-align: left;
+    width: 14rem;
+}
+
+.selected{
+    background-color: #efefef;
+}
+
+// input[type="checkbox"]{
+
+// }
+
+.icon{
+    font-size: 1rem;
+    color: #555;
+}
+
+.delete{
+    color:$delete;
+}
