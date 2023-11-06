@@ -1,10 +1,10 @@
-$border-color:#ccc;
+@use '../../styles/base';
 
 .search-box{
-    width: 75%;
+    width: base.$component-width;
     padding:12px 8px;
     font-size: 1rem;
-    border: 1px solid $border-color;
+    border: 1px solid base.$border-color;
     border-radius: 8px;
     outline: none;
 }

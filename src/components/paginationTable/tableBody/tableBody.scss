@@ -1,5 +1,6 @@
+@use '../../../styles/base';
 $border-color:#ccc;
-$delete: #ff0000ae;
+
 
 .hide-row{
     display: none;
@@ -9,16 +10,7 @@ $delete: #ff0000ae;
     display: table-cell;
 }
 
-
-.table-container{
-    width: 70%;
-    min-height: 500px;
-}
-
-table{
-    width: 100%;
-    margin: 25px 0;
-    border-collapse: collapse;
+tbody{
     tr{
         border-bottom: 1px solid $border-color;
         td:first-child{
@@ -37,15 +29,6 @@ table{
             }
         }
     }
-
-    th,td{
-        padding:10px 0;
-    }
-}
-
-th{
-    text-align: left;
-    text-transform: capitalize;
 }
 
 .edit-input{
@@ -66,15 +49,14 @@ th{
     background-color: #efefef;
 }
 
-// input[type="checkbox"]{
-
-// }
-
 .icon{
     font-size: 1rem;
     color: #555;
 }
 
 .delete{
-    color:$delete;
+    color: base.$delete-color;
+    &:hover{
+        color: base.$delete-hover;
+    }
 }

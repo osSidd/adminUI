@@ -1,6 +1,10 @@
+@use '../../styles/base';
+
+$page-btn-color: #0000ff99;
+$page-btn-secondary:#fefefe;
 
 .btn-container{
-    width: 70%;
+    width: base.$component-width;
     display: flex;
     align-items: center;
     justify-content: start;
@@ -8,15 +12,15 @@
 
 .delete-selected{
     text-transform: capitalize;
-    background-color: crimson;
-    color: #fefefe;
+    background-color: base.$delete-color;
+    color: $page-btn-secondary;
     padding:8px 16px;
     border-radius: 16px;
     margin-right: auto;
     cursor: pointer;
     transition: all 0.25s ease-in-out;
     &:hover{
-        background-color: #ff2211;
+        background-color: base.$delete-hover;
     }
 }
 
@@ -30,8 +34,8 @@
     font-size: 14px;
     text-align: center;
     margin:0 0.5rem;
-    color: white;
-    background-color: #0000ff99;
+    color: $page-btn-secondary;
+    background-color: $page-btn-color;
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
@@ -43,17 +47,16 @@
     }
 
     &:disabled{
-        background-color: #dedede;
-        color:#aaa;
+        background-color: #bcbcbc;
+        color: $page-btn-secondary;
     }
 }
 
 .current-page{
-    border:1px solid #0000ff99;
-    background-color: white;
-    color:#0000ff99;
+    border:1px solid $page-btn-color;
+    background-color: $page-btn-secondary;
+    color: $page-btn-color;
 }
-
 
 .page-icon{
     font-size: 1rem;

@@ -1,5 +1,7 @@
+@use './styles/base';
+
 $main-color: burlywood;
-$font-stack: Helvetica;
+$font-stack: Helvetica, sans-serif;
 
 *{
     box-sizing: border-box;
@@ -19,7 +21,22 @@ body{
     align-items: center;
 }
 
+.table-container{
+    width: base.$component-width;
+    min-height: 500px;
+}
+
+table{
+    width: 100%;
+    margin: 25px 0;
+    border-collapse: collapse;
+    th,td{
+        padding:10px 0;
+    }
+}
+
 button{
     background-color: transparent;
     border:none;
+    outline: none;
 }
