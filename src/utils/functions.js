@@ -21,8 +21,26 @@ function getPages(data=[], noOfRows=10){
     return arr
 }
 
+function deleteAll(arr){
+    let tempArr = [...arr]
+    let temp = tempArr.filter(item => item.selected)
+    temp.forEach(item => {
+        tempArr.splice(tempArr.lastIndexOf(item),1)
+    })
+    return tempArr
+}
+
+function deleteOne(arr, id){
+    let temp = [...arr]
+    let item = temp.find(item => item.id === id)
+    temp.splice(temp.indexOf(item),1)
+    return temp
+}
+
 export {
     debounce,
     compare,
     getPages,
+    deleteAll,
+    deleteOne,
 }

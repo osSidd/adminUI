@@ -8,7 +8,7 @@ function TableHeader({headers, selectAll, toggleSelectAll}){
             <tr>
                 <th>
                     <input 
-                        type="checkbox" 
+                        type="checkbox"
                         checked={selectAll.checked} 
                         onChange={toggleSelectAll}
                     />

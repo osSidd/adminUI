@@ -1,7 +1,8 @@
 @use './styles/base';
 
-$main-color: burlywood;
 $font-stack: Helvetica, sans-serif;
+$border-color:#ccc;
+
 
 *{
     box-sizing: border-box;
@@ -30,6 +31,9 @@ table{
     width: 100%;
     margin: 25px 0;
     border-collapse: collapse;
+    tr{
+        border-bottom: 1px solid $border-color;
+    }
     th,td{
         padding:10px 0;
     }

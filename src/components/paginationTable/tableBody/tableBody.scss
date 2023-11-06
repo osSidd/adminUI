@@ -1,6 +1,4 @@
 @use '../../../styles/base';
-$border-color:#ccc;
-
 
 .hide-row{
     display: none;
@@ -12,7 +10,6 @@ $border-color:#ccc;
 
 tbody{
     tr{
-        border-bottom: 1px solid $border-color;
         td:first-child{
             padding-right: 3rem;
         }
@@ -34,7 +31,8 @@ tbody{
 .edit-input{
     font-size: 1rem;
     width: fit-content;
-    color:#aaa;
+    color:#555;
+    background-color: #efefef;
     outline:none;
     border:none;
     border-radius: 5px;

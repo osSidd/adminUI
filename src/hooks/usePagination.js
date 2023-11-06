@@ -1,6 +1,6 @@
 import { useState, useEffect} from "react"
 
-import { compare, getPages } from "../utils/functions"
+import { compare, getPages, deleteAll, deleteOne } from "../utils/functions"
 
 export default function usePagination(noOfRows){
 
@@ -53,6 +53,7 @@ export default function usePagination(noOfRows){
         const id = e.target.id
         const lstPgStIndex =  Math.floor(userData.length/noOfRows)*noOfRows
         const lstPgEnIndex = userData.length
+        const lastPage = Math.ceil(userData.length/noOfRows)
 
         switch(id){
             case 'first':
@@ -68,6 +69,7 @@ export default function usePagination(noOfRows){
                     start: prev.start === 0 ? 0 : prev.start - noOfRows,
                     end: prev.end === noOfRows ? noOfRows : (prev.end === lstPgEnIndex ? lstPgStIndex : prev.end - noOfRows),
                 }))
+                setCurrentPage(prev => prev === 1 ? 1 : prev - 1)
                 return
 
             case 'no':
@@ -84,6 +86,7 @@ export default function usePagination(noOfRows){
                     start: prev.start === lstPgStIndex ? lstPgStIndex : prev.start + noOfRows,
                     end: prev.end === lstPgEnIndex ? lstPgEnIndex : prev.end + noOfRows, 
                 }))
+                setCurrentPage(prev => prev === lastPage ? lastPage : prev + 1)
                 return
             
             case 'last':
@@ -91,7 +94,7 @@ export default function usePagination(noOfRows){
                     start: lstPgStIndex,
                     end: lstPgEnIndex,
                 })
-                setCurrentPage(Math.ceil(userData.length/noOfRows))
+                setCurrentPage(lastPage)
                 return
         }
     }
@@ -121,29 +124,46 @@ export default function usePagination(noOfRows){
         setData(temp)
     }
 
-    function toggleSelectAll(e){
-        const checked = e.target.checked
-        setSelectAll(prev => ({checked: checked, bool:checked, pageNo: currentPage}))
-
-        setUserData(prev => (prev.map(item => ({
+    function selectData(arr, checked){
+        let temp = arr.map(item => {
+        const start = (currentPage-1)*noOfRows
+        const end = currentPage*noOfRows
+        return {
             ...item,
-            selected: prev.indexOf(item) >= (currentPage-1)*noOfRows && prev.indexOf(item) < currentPage*noOfRows ? checked : item.selected
-        }))))
+            selected: arr.indexOf(item) >= start && arr.indexOf(item) < end ? checked : item.selected
+            }
+        })
+        return temp
     }
 
+    function toggleSelectAll(e){
+        const checked = e.target.checked
+        setSelectAll({checked: checked, bool:checked, pageNo: currentPage})
+        
+        setUserData(selectData(userData, checked))
+        setData(selectData(data, checked))
+    }
+    
     function deleteSelectedRow(e){
         const id = e.target.id
+
+        const arr = id === 'delete' ? deleteAll(data) : deleteOne(data, id) 
+
+        setUserData(arr)
+        setData(arr)
+        
         if(id === 'delete'){
-            setUserData(prev => (prev.filter(item => !item.selected)))
-            setSelectAll(false)
+            setSelectAll(prev => ({
+                ...prev,
+                checked:false
+            }))
             return
         }
-        setUserData(prev => (prev.filter(item => item.id !== id)))
     }
 
     function handleSearch(e){
         const value = e.target.value
-    
+
         if(value === ''){
             setUserData(data)
             return

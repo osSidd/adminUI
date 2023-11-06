@@ -54,6 +54,9 @@ export default function App(){
                             editRow={editRow}
                             deleteSelectedRow={deleteSelectedRow}
                         />
+                        {
+                            !userData.length && <tfoot><tr><td>No entries</td></tr></tfoot>
+                        }
                     </table>
                 </div>
             </ErrorBoundary>

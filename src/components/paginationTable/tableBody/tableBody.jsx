@@ -18,8 +18,6 @@ export default function TableBody(props){
     return (
         <tbody>
             {
-                userData.length ?
-
                 userData.slice(index.start, index.end).map(data => {
                     return (
                         <tr key={data.id} className={data.selected ? 'selected' : undefined}>
@@ -87,7 +85,7 @@ export default function TableBody(props){
                             </td>
                         </tr>
                     )
-                }) : <tr><td>No entries</td></tr>
+                })
             }
         </tbody>
     )
