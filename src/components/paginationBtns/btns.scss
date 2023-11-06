@@ -13,6 +13,11 @@
     padding:8px 16px;
     border-radius: 16px;
     margin-right: auto;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+    &:hover{
+        background-color: #ff2211;
+    }
 }
 
 .page-btn-container{

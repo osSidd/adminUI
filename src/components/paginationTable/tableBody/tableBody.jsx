@@ -14,8 +14,6 @@ export default function TableBody(props){
         editRow, 
         deleteSelectedRow 
     } = props
-
-    console.log(index)
     
     return (
         <tbody>

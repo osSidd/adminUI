@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "devStart": "webpack-dev-server --mode development"
+    "dev": "webpack-dev-server --mode development"
   },
   "keywords": [],
   "author": "",

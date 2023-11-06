@@ -9,7 +9,6 @@ import PaginationBtns from "./components/paginationBtns/btns";
 import ErrorBoundary from "./error/errorBoundary";
 
 import usePagination from "./hooks/usePagination";
-import usePageBtns from "./hooks/usePageBtns";
 
 export default function App(){
     const noOfRows = 10
@@ -18,20 +17,17 @@ export default function App(){
     const {
         userData, 
         selectAll, 
+        index,
+        currentPage,
+        pages,
+        changePage,
         handleSearch, 
         toggleSelectAll, 
         toggleRowCheckbox, 
         handleChange, 
         editRow, 
-        deleteSelectedRow
+        deleteSelectedRow,
     } = usePagination(noOfRows)
-
-    const {
-        index, 
-        currentPage, 
-        pages, 
-        changePage
-    } = usePageBtns(userData, noOfRows)
    
     return (
         <div className="App">

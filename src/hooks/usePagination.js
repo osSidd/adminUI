@@ -1,15 +1,20 @@
 import { useState, useEffect} from "react"
 
-import { compare } from "../utils/functions"
-import usePageBtns from "./usePageBtns"
+import { compare, getPages } from "../utils/functions"
 
 export default function usePagination(noOfRows){
 
     const [userData, setUserData] = useState([])
     const [data, setData] = useState(userData)
+    const [selectAll, setSelectAll] = useState({checked:false, bool: false, pageNo:1})
+    const [currentPage, setCurrentPage] = useState(1)
+    const [pages, setPages] = useState(getPages())
+    const [index, setIndex] = useState({
+        start: 0,
+        end: noOfRows,
+    })
 
-    const {currentPage} = usePageBtns(userData, noOfRows)
-
+   
     useEffect(() => {
 
         async function fetchData(){
@@ -30,7 +35,66 @@ export default function usePagination(noOfRows){
         fetchData()
     }, [])
 
-    const [selectAll, setSelectAll] = useState({checked:false, pageNo:1})
+
+    useEffect(() => {
+        setPages(getPages(userData))
+    }, [userData])    
+
+
+    useEffect(() => {
+        setSelectAll(prev => ({
+            ...prev,
+            checked: prev.pageNo === currentPage ? prev.bool : false
+        }))
+    }, [currentPage])
+
+    function changePage(e){
+
+        const id = e.target.id
+        const lstPgStIndex =  Math.floor(userData.length/noOfRows)*noOfRows
+        const lstPgEnIndex = userData.length
+
+        switch(id){
+            case 'first':
+                setIndex({
+                    start: 0,
+                    end: noOfRows,
+                })
+                setCurrentPage(1)
+                return
+            
+            case 'prev':
+                setIndex(prev => ({
+                    start: prev.start === 0 ? 0 : prev.start - noOfRows,
+                    end: prev.end === noOfRows ? noOfRows : (prev.end === lstPgEnIndex ? lstPgStIndex : prev.end - noOfRows),
+                }))
+                return
+
+            case 'no':
+                const i = parseInt(e.target.dataset.i)
+                setIndex({
+                    start: noOfRows*i,
+                    end: noOfRows*(i+1)
+                })
+                setCurrentPage(i+1)
+                return
+
+            case 'next':
+                setIndex(prev => ({
+                    start: prev.start === lstPgStIndex ? lstPgStIndex : prev.start + noOfRows,
+                    end: prev.end === lstPgEnIndex ? lstPgEnIndex : prev.end + noOfRows, 
+                }))
+                return
+            
+            case 'last':
+                setIndex({
+                    start: lstPgStIndex,
+                    end: lstPgEnIndex,
+                })
+                setCurrentPage(Math.ceil(userData.length/noOfRows))
+                return
+        }
+    }
 
     function toggleRowCheckbox(e){
         const {checked, id} = e.target
@@ -58,10 +122,12 @@ export default function usePagination(noOfRows){
     }
 
     function toggleSelectAll(e){
-        setSelectAll(prev => ({checked: e.target.checked, pageNo: currentPage}))
+        const checked = e.target.checked
+        setSelectAll(prev => ({checked: checked, bool:checked, pageNo: currentPage}))
+
         setUserData(prev => (prev.map(item => ({
             ...item,
-            selected: prev.indexOf(item) < noOfRows*currentPage ? !item.selected : item.selected 
+            selected: prev.indexOf(item) >= (currentPage-1)*noOfRows && prev.indexOf(item) < currentPage*noOfRows ? checked : item.selected
         }))))
     }
 
@@ -90,6 +156,10 @@ export default function usePagination(noOfRows){
     return {
         userData,
         selectAll,
+        currentPage,
+        index,
+        pages,
+        changePage,
         toggleRowCheckbox,
         editRow,
         handleChange,
