@@ -4,11 +4,22 @@ import { compare, getPages, deleteAll, deleteOne } from "../utils/functions"
 
 export default function usePagination(noOfRows){
 
+    //state to handle user data
     const [userData, setUserData] = useState([])
+    
+    //state for holding an original copy of data
     const [data, setData] = useState(userData)
+
+    //state to handle the table header checkbox
     const [selectAll, setSelectAll] = useState({checked:false, bool: false, pageNo:1})
+    
+    //state to store the current page user is on
     const [currentPage, setCurrentPage] = useState(1)
+
+    //state for getting the total number of pages
     const [pages, setPages] = useState(getPages())
+
+    //state to slice the user data upto the given number of rows
     const [index, setIndex] = useState({
         start: 0,
         end: noOfRows,
@@ -17,6 +28,7 @@ export default function usePagination(noOfRows){
    
     useEffect(() => {
 
+        //fetching data from api and setting data into state
         async function fetchData(){
             try{
                 const response = await fetch('https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json')
@@ -36,11 +48,13 @@ export default function usePagination(noOfRows){
     }, [])
 
 
+    //setting the number of pages based on the data change due to deletion of data by user
     useEffect(() => {
         setPages(getPages(userData))
     }, [userData])    
 
 
+    //setting the checked property of header checkbox upon page change
     useEffect(() => {
         setSelectAll(prev => ({
             ...prev,
@@ -48,6 +62,8 @@ export default function usePagination(noOfRows){
         }))
     }, [currentPage])
 
+
+    //function to handle page change upon clicking the pagination buttons
     function changePage(e){
 
         const id = e.target.id
@@ -99,6 +115,8 @@ export default function usePagination(noOfRows){
         }
     }
 
+
+    //function to handle the checked prop of row checkbox
     function toggleRowCheckbox(e){
         const {checked, id} = e.target
         setUserData(prev => (prev.map(item => ({
@@ -107,6 +125,8 @@ export default function usePagination(noOfRows){
         }))))
     }
 
+
+    //function to handle the edit operation of particular row upon clicking the edit icon 
     function editRow(e){
         const id = e.target.id
         let temp = userData.map(item => ({...item, edit: item.id === id ? !item.edit : item.edit}))
@@ -114,6 +134,8 @@ export default function usePagination(noOfRows){
         setData(temp)
     }
 
+
+    //function to handle the values entered into input element when user edits a row
     function handleChange(e){
         const {id, name, value} = e.target
         let temp = userData.map(item => ({
@@ -124,6 +146,8 @@ export default function usePagination(noOfRows){
         setData(temp)
     }
 
+
+    //function to handle selection of all rows on a page upon checking of table head checkbox
     function selectData(arr, checked){
         let temp = arr.map(item => {
         const start = (currentPage-1)*noOfRows
@@ -136,6 +160,8 @@ export default function usePagination(noOfRows){
         return temp
     }
 
+
+    //function to toggle checked prop of table header checkbox
     function toggleSelectAll(e){
         const checked = e.target.checked
         setSelectAll({checked: checked, bool:checked, pageNo: currentPage})
@@ -144,6 +170,8 @@ export default function usePagination(noOfRows){
         setData(selectData(data, checked))
     }
     
+
+    //function to handle deletion of data upon clicking both 'delete selected' and delete icon
     function deleteSelectedRow(e){
         const id = e.target.id
 
@@ -161,6 +189,8 @@ export default function usePagination(noOfRows){
         }
     }
 
+
+    //functio to handle the search value given in input search box
     function handleSearch(e){
         const value = e.target.value
 
@@ -169,7 +199,6 @@ export default function usePagination(noOfRows){
             return
         }else{
             setUserData(data.filter(item => compare(item.name, value) || compare(item.email, value) || compare(item.role, value)))
-            // setPages(getPages(userData))
         }
     }
 
